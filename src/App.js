@@ -1,15 +1,12 @@
+import "./index.css";
 import { Routes, Route, Link } from "react-router-dom";
 import { Home, CategoryList, CategoryDetails, VideoDetails } from "./pages";
+import { Navbar } from "./components";
 
 function App() {
   return (
     <div>
-      <nav>
-        <Link to="/">Home</Link>
-        <Link to="/categories">CategoryList</Link>
-        <Link to="/category/category-id">CategoryDetails</Link>
-        <Link to="/video/video-id">VideoDetails</Link>
-      </nav>
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/categories" element={<CategoryList />}></Route>

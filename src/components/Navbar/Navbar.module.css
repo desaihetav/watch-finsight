@@ -1,0 +1,36 @@
+.navOuter {
+  display: flex;
+  align-items: center;
+  height: 4rem;
+  background-color: var(--color-primary-base);
+  color: white;
+}
+
+.logoContainer {
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  width: max-content;
+}
+
+.logoImage {
+  max-height: 4rem;
+}
+
+.logoText {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.iconBadge {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-top: 0.25rem;
+}
+
+.navIcon {
+  margin-top: 0.5rem;
+  margin-right: 0.25rem;
+  font-size: 1.5rem;
+}
