@@ -1,0 +1,56 @@
+.container {
+  max-width: 1280px;
+  margin: 0rem auto;
+}
+
+.reactPlayer {
+  margin: 0 auto;
+  height: calc((100vw - 0rem) * 0.5625);
+  width: calc(100vw - 0rem);
+  max-width: 1280px;
+}
+
+.avatarImage {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.channelName {
+  font-size: 1.125rem;
+  margin: 0;
+}
+
+.subs {
+  font-size: 0.875rem;
+  margin: 0;
+  opacity: 0.7;
+}
+
+.title {
+  font-size: 1.25rem;
+}
+
+.description {
+  opacity: 0.7;
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+  /* max-width: 640px; */
+}
+
+.contentGrid {
+  margin: 0;
+}
+
+@media screen and (min-width: 640px) {
+  .reactPlayer {
+    height: calc((100vw - 4rem) * 0.5625);
+    width: calc(100vw - 4rem);
+    max-width: 1280px;
+  }
+  .container {
+    margin-top: 2rem;
+  }
+  /* .channelName {
+    font-size: 2rem;
+  } */
+}

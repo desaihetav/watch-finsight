@@ -1,9 +1,7 @@
 import { Link } from "react-router-dom";
 import styles from "./Navbar.module.css";
-import logoWhite from "../../assets/images/logo_white.svg";
 
 export default function Navbar() {
-  const [cart, wishlist] = [[], []];
   return (
     <div className={`${styles.navOuter}`}>
       <div className="container row items-center">

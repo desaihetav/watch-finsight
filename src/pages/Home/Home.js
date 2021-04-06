@@ -1,27 +1,25 @@
 import { useEffect } from "react";
 import axios from "axios";
-import { HomeHeader, VideoCard } from "../../components";
 import { useData } from "../../context/DataContext";
+import { HomeHeader, VideoCard } from "../../components";
 
 export default function Home() {
   const { videos, dispatch } = useData();
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(
-        "https://watch-finsight-default-rtdb.firebaseio.com/videos.json"
-      );
-      dispatch({ type: "INITIALIZE_VIDEOS", payload: response.data });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const fetchData = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       "https://watch-finsight-default-rtdb.firebaseio.com/videos.json"
+  //     );
+  //     dispatch({ type: "INITIALIZE_VIDEOS", payload: response.data });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  console.log(videos);
-
-  useEffect(() => {
-    videos.length === 0 && fetchData();
-  }, []);
+  // useEffect(() => {
+  //   videos.length === 0 && fetchData();
+  // }, []);
 
   return (
     <div>
