@@ -11,6 +11,7 @@ export const DataProvider = ({ children }) => {
     <DataContext.Provider
       value={{
         videos: state.videos,
+        playlists: state.playlists,
         dispatch,
       }}
     >
