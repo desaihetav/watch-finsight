@@ -88,7 +88,7 @@ const DeleteModal = ({ setshowDeleteModal, playlistId }) => {
 
   const modalTitle = isDefaultPlaylist ? "Uh Oh!" : "Are you sure?";
   const modalText = isDefaultPlaylist
-    ? "You cannot delete a default playlist."
+    ? "You cannot delete a default playlist. You can remove videos from this playlist instead."
     : "Do you really want to delete your playlist? This will delete all your videos saved in the playlist. You cannot undo this action.";
 
   const deletePlaylist = () => {

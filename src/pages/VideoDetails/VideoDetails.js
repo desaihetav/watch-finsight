@@ -70,7 +70,7 @@ export default function VideoDetails() {
           </div>
           <div className="container">
             <div className={`${styles.contentGrid} items-start`}>
-              <div>
+              <div className={`${styles.flexLeft}`}>
                 <div className="flex items-center mb-4">
                   <img
                     alt=""
@@ -89,7 +89,9 @@ export default function VideoDetails() {
                 <p className={`${styles.description}`}>{video.description}</p>
               </div>
 
-              <div className="flex flex-col w-full justify-start my-0">
+              <div
+                className={`flex flex-col w-full justify-start ${styles.flexRight}`}
+              >
                 <div
                   className={`flex flex-wrap justify-around ${styles.buttonBar}`}
                 >

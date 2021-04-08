@@ -1,5 +1,5 @@
 .name {
-  font-size: 1.75rem;
+  font-size: 1.25rem;
   font-weight: bold;
   width: 100%;
   padding: 1rem;
@@ -23,6 +23,13 @@
 
 .modalInner {
   background-color: var(--color-background-3);
+  margin: 0 1rem;
   padding: 1rem 2rem;
   max-width: 40rem;
+}
+
+@media screen and (min-width: 640px) {
+  .name {
+    font-size: 1.75rem;
+  }
 }
