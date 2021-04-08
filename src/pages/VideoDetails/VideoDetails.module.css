@@ -49,28 +49,35 @@
 }
 
 .playlistMenu {
-  display: none;
+  display: block;
   position: absolute;
   right: 0;
   padding: 0 1rem;
   width: 15rem;
   z-index: 1;
   background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .playlistMenuItem {
   padding: 0.5rem 0;
+  width: fit-content;
   opacity: 0.7;
+  display: flex;
+  align-items: center;
+  margin: 0 0.25rem;
 }
 
 .newPlaylistInput {
   border: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 0.5rem 0.25rem;
-  width: min-content;
+  padding: 0.5rem 1rem;
+
+  width: 100%;
+  max-width: 80%;
 }
 
 .addIcon {
-  margin-right: 1rem;
+  padding: 0.5rem;
 }
 
 .stats {
@@ -101,5 +108,6 @@
 @media screen and (min-width: 1100px) {
   .contentGrid {
     flex-direction: row;
+    margin: 1rem 0;
   }
 }

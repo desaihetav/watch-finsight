@@ -1,3 +1,5 @@
+import { v4 as uuid } from "uuid";
+
 const addToPlaylist = (state, videoId, playlistId) => ({
   ...state,
   playlists: state.playlists.map((playlistItem) => {
@@ -38,6 +40,18 @@ export const reducerFunc = (state, { type, payload }) => {
       return isInPlaylist
         ? removeFromPlaylist(state, payload.videoId, payload.playlistId)
         : addToPlaylist(state, payload.videoId, payload.playlistId);
+    case "CREATE_PLAYLIST":
+      return {
+        ...state,
+        playlists: [
+          ...state.playlists,
+          {
+            name: payload.playlistName,
+            id: uuid(),
+            videos: [payload.videoId],
+          },
+        ],
+      };
     default:
       return state;
   }

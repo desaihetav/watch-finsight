@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useData } from "../../context/DataContext";
 import ReactPlayer from "react-player";
@@ -6,22 +7,45 @@ import styles from "./VideoDetails.module.css";
 export default function VideoDetails() {
   const { videos, playlists, dispatch } = useData();
   const { videoId } = useParams();
-  const playlistIds = Object.keys(playlists);
+  const [newPlaylistInput, setNewPlaylistInput] = useState("");
+
+  const [showPlaylistMenu, setShowPlaylistMenu] = useState(false);
+  const togglePlaylistMenu = () =>
+    setShowPlaylistMenu((showPlaylistMenu) => !showPlaylistMenu);
 
   const video = videos.find((videoItem) => videoItem.id === videoId);
 
   const getPlaylistById = (id) =>
-    playlists.filter((playlistItem) => playlistItem.id === id)[0];
+    playlists.filter((playlistItem) => playlistItem.id === id)?.[0];
 
-  const isSaved = getPlaylistById("saved").videos.find(
-    (videoItem) => videoItem === video.id
-  );
-  const isLiked = getPlaylistById("liked").videos.find(
-    (videoItem) => videoItem === video.id
-  );
-  const isWatchLater = getPlaylistById("watch-later").videos.find(
-    (videoItem) => videoItem === video.id
-  );
+  const getPlaylistByName = (name) =>
+    playlists.filter((playlistItem) => playlistItem.name === name)?.[0];
+
+  const isInPlaylist = (playlistId, videoId) => {
+    const playlist = getPlaylistById(playlistId);
+    return playlist.videos.find((videoItem) => videoItem === video.id);
+  };
+
+  const createPlaylist = (e) => {
+    e.preventDefault();
+    setNewPlaylistInput("");
+    newPlaylistInput &&
+      !getPlaylistByName(newPlaylistInput) &&
+      dispatch({
+        type: "CREATE_PLAYLIST",
+        payload: { playlistName: newPlaylistInput, videoId: video.id },
+      });
+  };
+
+  // const isSaved = getPlaylistById("saved").videos.find(
+  //   (videoItem) => videoItem === video.id
+  // );
+  // const isLiked = getPlaylistById("liked").videos.find(
+  //   (videoItem) => videoItem === video.id
+  // );
+  // const isWatchLater = getPlaylistById("watch-later").videos.find(
+  //   (videoItem) => videoItem === video.id
+  // );
 
   const toggleInPlaylist = (playlistId) => {
     dispatch({
@@ -41,7 +65,6 @@ export default function VideoDetails() {
               width="100%"
               height="100%"
               controls
-              playing
               pip
             />
           </div>
@@ -74,16 +97,16 @@ export default function VideoDetails() {
                     onClick={() => toggleInPlaylist("saved")}
                     className={`btn btn-ghost btn-icon btn-small`}
                   >
-                    <span class={`material-icons-round`}>
-                      {isSaved ? "bookmark" : "bookmark_border"}
+                    <span className={`material-icons-round`}>
+                      {isInPlaylist("saved") ? "bookmark" : "bookmark_border"}
                     </span>
                   </button>
                   <button
                     onClick={() => toggleInPlaylist("liked")}
                     className={`btn btn-ghost btn-icon btn-small`}
                   >
-                    <span class={`material-icons-round`}>
-                      {isLiked ? "favorite" : "favorite_border"}
+                    <span className={`material-icons-round`}>
+                      {isInPlaylist("liked") ? "favorite" : "favorite_border"}
                     </span>
                   </button>
                   <button
@@ -91,8 +114,8 @@ export default function VideoDetails() {
                     className={`btn btn-ghost btn-icon btn-small`}
                   >
                     <span
-                      class={`${
-                        isWatchLater
+                      className={`${
+                        isInPlaylist("watch-later")
                           ? "material-icons"
                           : "material-icons-outlined"
                       }`}
@@ -101,33 +124,66 @@ export default function VideoDetails() {
                     </span>
                   </button>
                   <div className="relative">
-                    <button className={`btn btn-ghost btn-icon btn-small`}>
-                      <span class={`material-icons-round`}>playlist_add</span>
+                    <button
+                      onClick={togglePlaylistMenu}
+                      className={`btn btn-ghost btn-icon btn-small`}
+                    >
+                      <span className={`material-icons-round`}>
+                        playlist_add
+                      </span>
                     </button>
-                    <div className={`${styles.playlistMenu}`}>
-                      <ul>
-                        {playlistIds &&
-                          playlistIds.map((playlistItem) => (
-                            <li className={`${styles.playlistMenuItem}`}>
-                              <input type="checkbox" className="mr-4" />
-                              <span>{playlists[playlistItem].name}</span>
-                            </li>
-                          ))}
-                        <li
-                          className={`${styles.playlistMenuItem} flex items-center`}
-                        >
-                          <input
-                            className={`${styles.newPlaylistInput}`}
-                            type="text"
-                          />
-                          <span
-                            className={`material-icons-outlined ${styles.addIcon}`}
+                    {showPlaylistMenu && (
+                      <div className={`${styles.playlistMenu}`}>
+                        <ul>
+                          {playlists &&
+                            playlists.map((playlistItem, idx) => (
+                              <li className={`${styles.playlistMenuItem}`}>
+                                <input
+                                  checked={isInPlaylist(playlistItem.id)}
+                                  type="checkbox"
+                                  onChange={() =>
+                                    toggleInPlaylist(playlistItem.id)
+                                  }
+                                  className="mr-4"
+                                />
+                                <span>{playlistItem.name}</span>
+                              </li>
+                            ))}
+                          <li
+                            className={`${styles.playlistMenuItem} flex items-center`}
                           >
-                            add
-                          </span>
-                        </li>
-                      </ul>
-                    </div>
+                            <form
+                              onSubmit={(e) => createPlaylist(e)}
+                              className="flex items-center"
+                            >
+                              <input
+                                className={`${styles.newPlaylistInput}`}
+                                value={newPlaylistInput}
+                                onChange={(e) =>
+                                  setNewPlaylistInput(() => e.target.value)
+                                }
+                                type="text"
+                              />
+                              <button
+                                className={`btn btn-small btn-ghost btn-icon flex-0 ${styles.addIcon} inline`}
+                              >
+                                <span className={`material-icons-outlined`}>
+                                  add
+                                </span>
+                              </button>
+                            </form>
+                          </li>
+                          <li>
+                            <button
+                              onClick={togglePlaylistMenu}
+                              className="btn btn-ghost btn-small w-full"
+                            >
+                              Close
+                            </button>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="flex flex-wrap">
@@ -137,7 +193,7 @@ export default function VideoDetails() {
                     <div
                       className={`flex items-center flex-1 justify-between ${styles.statItem}`}
                     >
-                      <span class={`material-icons-round ${styles.icon}`}>
+                      <span className={`material-icons-round ${styles.icon}`}>
                         visibility
                       </span>
                       <div className={`space-x-0-5`}></div>
@@ -146,7 +202,7 @@ export default function VideoDetails() {
                     <div
                       className={`flex items-center flex-1 justify-between ${styles.statItem}`}
                     >
-                      <span class={`material-icons-round ${styles.icon}`}>
+                      <span className={`material-icons-round ${styles.icon}`}>
                         favorite
                       </span>
                       <div className={`space-x-0-5`}></div>
@@ -159,7 +215,7 @@ export default function VideoDetails() {
                     <div
                       className={`flex items-center flex-1 justify-between ${styles.statItem}`}
                     >
-                      <span class={`material-icons-round ${styles.icon}`}>
+                      <span className={`material-icons-round ${styles.icon}`}>
                         forum
                       </span>
                       <div className={`space-x-0-5`}></div>
@@ -168,7 +224,7 @@ export default function VideoDetails() {
                     <div
                       className={`flex items-center flex-1 justify-between ${styles.statItem}`}
                     >
-                      <span class={`material-icons-round ${styles.icon}`}>
+                      <span className={`material-icons-round ${styles.icon}`}>
                         timelapse
                       </span>
                       <div className={`space-x-0-5`}></div>
