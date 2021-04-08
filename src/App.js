@@ -22,7 +22,6 @@ function App() {
 
   useEffect(() => {
     videos.length === 0 && fetchData();
-    console.log(videos);
   }, []);
 
   return (

@@ -4,7 +4,6 @@ import { VideoOverviewCard } from "../../components";
 import styles from "./PlaylistOverview.module.css";
 
 const PlaylistOverview = ({ playlist }) => {
-  console.log({ playlist });
   return (
     <div className={`${styles.container} flex flex-col`}>
       <div className={`flex items-center justify-between mb-2`}>
@@ -17,15 +16,15 @@ const PlaylistOverview = ({ playlist }) => {
           )}
         </div>
         <Link
-          className={`btn btn-ghost btn-small self-end`}
+          className={`btn btn-ghost btn-small btn-icon`}
           to={`/playlist/${playlist.id}`}
         >
-          Go to Playlist
-          <img
+          <span class="material-icons-outlined">launch</span>
+          {/* <img
             alt="right arrow"
             className={`btn-icon-right`}
             src={rightArrow}
-          ></img>
+          ></img> */}
         </Link>
       </div>
       <div className="divider"></div>

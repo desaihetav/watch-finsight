@@ -1,5 +1,5 @@
 .cardContainer {
-  margin: 2rem 0;
+  margin: 1rem 0;
 }
 
 .card {
@@ -16,6 +16,7 @@
 .cardContent {
   position: relative;
   display: flex;
+  width: 100%;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
@@ -32,6 +33,11 @@
 .cardTitle {
   font-size: 1.375rem;
   margin: 0.5rem 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 }
 
 .cardDescription {

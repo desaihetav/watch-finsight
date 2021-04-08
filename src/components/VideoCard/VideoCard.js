@@ -12,12 +12,11 @@ export default function VideoCard({ videoId }) {
     channelName,
     published_date,
     title,
+    description,
     duration,
   } = findVideoById();
-  const video = findVideoById();
-  console.log({ video });
   return (
-    <Link to={`/video/${id}`}>
+    <Link to={`/video/${id}`} className="w-full">
       <div className={`${styles.cardContainer}`}>
         <div className={`${styles.card}`}>
           <img alt="" src={thumbnailURL} className={`${styles.cardImage}`} />
@@ -32,12 +31,7 @@ export default function VideoCard({ videoId }) {
 
             <h3 className={`${styles.cardTitle}`}>{title}</h3>
 
-            <p className={`${styles.cardDescription}`}>
-              Timeless lessons on wealth, greed, and happiness doing well with
-              money isn’t necessarily about what you know. It’s about how you
-              behave. And behavior is hard to teach, even to really smart
-              people.
-            </p>
+            <p className={`${styles.cardDescription}`}>{description}</p>
             <div className={`${styles.cardStats} row`}>
               <span className="material-icons-round">schedule</span>
               <div className="space-x-0-5"></div>

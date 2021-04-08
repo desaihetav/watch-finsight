@@ -3,7 +3,6 @@ import { PlaylistOverview } from "../../components";
 
 export default function Playlists() {
   const { playlists } = useData();
-  console.log({ playlists });
   return (
     <div className="container">
       <h1 className="my-8">Playlists</h1>

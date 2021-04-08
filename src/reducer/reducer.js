@@ -52,6 +52,15 @@ export const reducerFunc = (state, { type, payload }) => {
           },
         ],
       };
+    case "UPDATE_PLAYLIST_NAME":
+      return {
+        ...state,
+        playlists: state.playlists.map((playlistItem) =>
+          playlistItem.id === payload.id
+            ? { ...playlistItem, name: payload.name }
+            : playlistItem
+        ),
+      };
     default:
       return state;
   }
