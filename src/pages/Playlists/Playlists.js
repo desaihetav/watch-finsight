@@ -1,4 +1,4 @@
-import { useData } from "../../context/DataContext";
+import { useData } from "../../context";
 import { PlaylistOverview } from "../../components";
 
 export default function Playlists() {

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
-import { useData } from "../../context/DataContext";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useData, useAuth } from "../../context";
 import ReactPlayer from "react-player";
 import styles from "./VideoDetails.module.css";
 
@@ -8,10 +8,15 @@ export default function VideoDetails() {
   const { videos, playlists, dispatch } = useData();
   const { videoId } = useParams();
   const [newPlaylistInput, setNewPlaylistInput] = useState("");
-
   const [showPlaylistMenu, setShowPlaylistMenu] = useState(false);
-  const togglePlaylistMenu = () =>
-    setShowPlaylistMenu((showPlaylistMenu) => !showPlaylistMenu);
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const { user } = useAuth();
+
+  const togglePlaylistMenu = () => {
+    user
+      ? setShowPlaylistMenu((showPlaylistMenu) => !showPlaylistMenu)
+      : setShowAuthModal(true);
+  };
 
   const video = videos.find((videoItem) => videoItem.id === videoId);
 
@@ -37,25 +42,20 @@ export default function VideoDetails() {
       });
   };
 
-  // const isSaved = getPlaylistById("saved").videos.find(
-  //   (videoItem) => videoItem === video.id
-  // );
-  // const isLiked = getPlaylistById("liked").videos.find(
-  //   (videoItem) => videoItem === video.id
-  // );
-  // const isWatchLater = getPlaylistById("watch-later").videos.find(
-  //   (videoItem) => videoItem === video.id
-  // );
-
   const toggleInPlaylist = (playlistId) => {
-    dispatch({
-      type: "TOGGLE_IN_PLAYLIST",
-      payload: { videoId: video.id, playlistId: playlistId },
-    });
+    user
+      ? dispatch({
+          type: "TOGGLE_IN_PLAYLIST",
+          payload: { videoId: video.id, playlistId: playlistId },
+        })
+      : setShowAuthModal(true);
   };
 
   return (
     <div>
+      {showAuthModal && (
+        <AuthModal setShowAuthModal={setShowAuthModal} dispatch={dispatch} />
+      )}
       {video && (
         <div className={`${styles.container}`}>
           <div className={`${styles.reactPlayer}`}>
@@ -239,15 +239,34 @@ export default function VideoDetails() {
           </div>
         </div>
       )}
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
     </div>
   );
 }
+
+const AuthModal = ({ setShowAuthModal }) => {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  return (
+    <div className={`${styles.modalOuter}`}>
+      <div className={`${styles.modalInner}`}>
+        <h2>Uh Oh!</h2>
+        <p>You need to login in order to add videos to your playlists.</p>
+        <div className="flex items-center justify-center">
+          <button
+            onClick={() => setShowAuthModal(false)}
+            className="btn btn-outlined btn-small"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={() => navigate("/login", { state: { from: pathname } })}
+            className="btn btn-solid btn-small"
+          >
+            Login
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};

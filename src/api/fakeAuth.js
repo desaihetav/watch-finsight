@@ -15,13 +15,32 @@ const findUserByUsername = (username) => {
   return Users.find((user) => user.username === username);
 };
 
-export const fakeAuth = (username, password) => {
+export const fakeAuthLogin = (username, password) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       const user = findUserByUsername(username);
-      user.password === password
-        ? resolve({ success: true, status: 200, data: user })
-        : reject({ success: false, status: 401 });
+      if (user) {
+        user.password === password
+          ? resolve({ success: true, status: 200, data: user })
+          : reject({ success: false, status: 401 });
+      } else {
+        reject({ success: false, status: 401 });
+      }
+    }, 1500);
+  });
+};
+
+export const fakeAuthSignup = (name, username, password) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const user = findUserByUsername(username);
+      if (user) {
+        reject({ success: false, status: 401 });
+      } else {
+        console.log("herererer");
+        resolve({ success: true, status: 200, data: user });
+        console.log("herererer");
+      }
     }, 1500);
   });
 };

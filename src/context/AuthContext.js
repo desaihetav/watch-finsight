@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { fakeAuth } from "../api/fakeAuth";
+import { fakeAuthLogin, fakeAuthSignup } from "../api/fakeAuth";
 
 const AuthContext = createContext(null);
 
@@ -12,7 +12,24 @@ export const AuthProvider = ({ children }) => {
 
   const loginUserWithCredentials = async (username, password) => {
     try {
-      const { success, data: user } = await fakeAuth(username, password);
+      const { success, data: user } = await fakeAuthLogin(username, password);
+      if (success) {
+        setUser(user);
+        localStorage?.setItem("authUser", JSON.stringify(user));
+        return user;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const createUserWithCredentials = async (name, username, password) => {
+    try {
+      const { success, data: user } = await fakeAuthSignup(
+        name,
+        username,
+        password
+      );
       if (success) {
         setUser(user);
         localStorage?.setItem("authUser", JSON.stringify(user));
@@ -29,7 +46,14 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loginUserWithCredentials, logout }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        createUserWithCredentials,
+        loginUserWithCredentials,
+        logout,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

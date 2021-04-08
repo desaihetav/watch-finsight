@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useData } from "../../context/DataContext";
+import { useData } from "../../context";
 import { VideoCard } from "../../components";
 import styles from "./PlaylistDetails.module.css";
 

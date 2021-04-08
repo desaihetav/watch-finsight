@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import axios from "axios";
-import { useData } from "../../context/DataContext";
+import { useData } from "../../context";
 import { HomeHeader, VideoCard } from "../../components";
 
 export default function Home() {

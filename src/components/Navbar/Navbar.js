@@ -5,7 +5,7 @@ import { useAuth } from "../../context";
 export default function Navbar() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const { user, loginUserWithCredentials, logout } = useAuth();
+  const { user, logout } = useAuth();
   const authBtnHandler = () => {
     user ? logout() : navigate("/login", { state: { from: pathname } });
   };

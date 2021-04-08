@@ -12,6 +12,7 @@ export const DataProvider = ({ children }) => {
       value={{
         videos: state.videos,
         playlists: state.playlists,
+        users: state.users,
         dispatch,
       }}
     >

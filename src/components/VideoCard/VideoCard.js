@@ -1,6 +1,6 @@
 import styles from "./VideoCard.module.css";
 import { Link } from "react-router-dom";
-import { useData } from "../../context/DataContext";
+import { useData } from "../../context";
 
 export default function VideoCard({ videoId }) {
   const { videos } = useData();

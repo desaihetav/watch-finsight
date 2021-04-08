@@ -62,14 +62,6 @@ export const reducerFunc = (state, { type, payload }) => {
         ),
       };
     case "DELETE_PLAYLIST":
-      console.log("DELETE IN REDUCER");
-      console.log(payload.playlistId);
-      console.log(
-        state.playlists.filter(
-          (playlistItem) => playlistItem.id !== payload.playlistId
-        )
-      );
-
       return {
         ...state,
         playlists: state.playlists.filter(
@@ -98,6 +90,18 @@ export const initialState = {
       name: "Watch Later Videos",
       id: "watch-later",
       videos: [],
+    },
+  ],
+  users: [
+    {
+      username: "admin",
+      password: "admin",
+      name: "Admin",
+    },
+    {
+      username: "desaihetav",
+      password: "pass123",
+      name: "Hetav Desai",
     },
   ],
 };

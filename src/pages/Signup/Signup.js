@@ -1,26 +1,31 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context";
-import styles from "./Login.module.css";
+import styles from "./Signup.module.css";
 import logo from "../../assets/images/logo_white.png";
 
-export default function Login() {
+export default function Signup() {
+  const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [loginStatus, setLoginStatus] = useState("Login");
-  const { loginUserWithCredentials } = useAuth();
+  const [signupStatus, setSignupStatus] = useState("");
+  const { createUserWithCredentials } = useAuth();
 
   const { state } = useLocation();
   const navigate = useNavigate();
 
-  const loginHandler = async () => {
-    setLoginStatus("Loading");
-    const authResult = await loginUserWithCredentials(username, password);
+  const signupHandler = async () => {
+    setSignupStatus("Loading");
+    const authResult = await createUserWithCredentials(
+      name,
+      username,
+      password
+    );
     if (authResult) {
-      setLoginStatus("Success");
+      setSignupStatus("Success");
       navigate(state?.from ? state.from : "/");
     } else {
-      setLoginStatus("Failed");
+      setSignupStatus("Failed");
     }
   };
 
@@ -34,35 +39,43 @@ export default function Login() {
       </div>
       <div className={`${styles.rightContainer}`}>
         <div className={`${styles.loginCard}`}>
-          <h1 className={`${styles.title}`}>Login</h1>
+          <h1 className={`${styles.title}`}>Signup</h1>
           <span className={`${styles.subtitle}`}>
             Get started with your Personal Finance Journey!
           </span>
           <div className="space-y-1"></div>
-          {loginStatus === "Failed" && (
+          {signupStatus === "Failed" && (
             <div class="alert alert-error">
               <span class="material-icons-round alert-icon">
                 {" "}
                 error_outline{" "}
               </span>
-              Invalid Credentials. Please try again.
+              User with entered username already exists
             </div>
           )}
           <div className="space-y-1"></div>
           <input
+            placeholder="Enter Name"
+            className={`input-field ${styles.input} ${
+              signupStatus === "Failed" && "input-error"
+            }`}
+            type="text"
+            value={name}
+            onChange={(e) => setName(() => e.target.value)}
+          />
+          <input
             placeholder="Enter Username"
             className={`input-field ${styles.input} ${
-              loginStatus === "Failed" && "input-error"
+              signupStatus === "Failed" && "input-error"
             }`}
             type="text"
             value={username}
             onChange={(e) => setUsername(() => e.target.value)}
           />
-
           <input
             placeholder="Enter Password"
             className={`input-field ${styles.input} ${
-              loginStatus === "Failed" && "input-error"
+              signupStatus === "Failed" && "input-error"
             }`}
             type="password"
             value={password}
@@ -70,16 +83,13 @@ export default function Login() {
           />
           <div className="space-y-1"></div>
           <button
-            onClick={loginHandler}
+            onClick={signupHandler}
             className={`btn btn-solid btn-large w-full ${styles.input}`}
           >
-            {loginStatus === "Loading" ? "Loggin In..." : "Login"}
+            {signupStatus === "Loading" ? "Loggin In..." : "Login"}
           </button>
           <div className="space-y-1"></div>
-          <button
-            // onClick={() => navigate("/signup")}
-            className={`btn btn-ghost w-full ${styles.input}`}
-          >
+          <button className={`btn btn-ghost w-full ${styles.input}`}>
             Not A Member Yet? Sign Up
           </button>
         </div>

@@ -1,4 +1,4 @@
-import { useData } from "../../context/DataContext";
+import { useData } from "../../context";
 import styles from "./VideoOverviewCard.module.css";
 import { Link } from "react-router-dom";
 
