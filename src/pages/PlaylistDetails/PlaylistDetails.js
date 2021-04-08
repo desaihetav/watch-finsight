@@ -68,11 +68,17 @@ export default function PlaylistDetails() {
         </div>
       </div>
       <ul className="flex flex-col w-full">
-        {playlist.videos.map((videoItem) => (
-          <li className="w-full">
-            <VideoCard videoId={videoItem} />
-          </li>
-        ))}
+        {playlist.videos.length !== 0 ? (
+          playlist.videos.map((videoItem) => (
+            <li className="w-full">
+              <VideoCard videoId={videoItem} />
+            </li>
+          ))
+        ) : (
+          <h2 className={`w-full text-center my-8`}>
+            No video is this playlist
+          </h2>
+        )}
       </ul>
     </div>
   );

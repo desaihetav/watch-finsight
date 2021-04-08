@@ -1,0 +1,85 @@
+.container {
+  flex-direction: column;
+}
+
+.leftContainer {
+  position: relative;
+  background-image: url("https://cms.qz.com/wp-content/uploads/2018/08/rts11v4k-e1521465721776.jpg?quality=75&strip=all&w=1600&h=900&crop=1");
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 12rem;
+}
+
+.leftContainerTint {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.logo {
+  width: 25%;
+  margin-left: -2rem;
+}
+
+.leftContainerText {
+  color: white;
+  font-size: 3rem;
+  line-height: 5rem;
+  margin: 0;
+}
+
+.rightContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  width: 100%;
+  max-width: 640px;
+}
+
+.loginCard {
+  width: 100%;
+  max-width: 30rem;
+}
+
+.title {
+  font-size: 3rem;
+  line-height: 4.5rem;
+  margin: 0;
+}
+
+.subtitle {
+  opacity: 0.7;
+  font-size: 1rem;
+}
+
+.input {
+  width: 100%;
+}
+
+@media screen and (min-width: 640px) {
+  .container {
+    flex-direction: row;
+  }
+  .leftContainer {
+    height: calc(100vh - 4rem);
+    width: 50vw;
+  }
+  .leftContainerTint {
+    background-color: rgba(0, 0, 0, 0.85);
+    flex-direction: column;
+  }
+  .logo {
+    margin: 0;
+    width: 50%;
+  }
+}

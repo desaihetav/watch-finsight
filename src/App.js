@@ -1,10 +1,11 @@
 import "./index.css";
 import { Routes, Route } from "react-router-dom";
-import { Home, VideoDetails, Playlists, PlaylistDetails } from "./pages";
+import { Home, VideoDetails, Playlists, PlaylistDetails, Login } from "./pages";
 import { Navbar } from "./components";
 import { useEffect } from "react";
 import axios from "axios";
-import { useData } from "./context/DataContext";
+import { useData } from "./context";
+import { PrivateRoute } from "./api/ProtectedRoute";
 
 function App() {
   const { videos, dispatch } = useData();
@@ -31,10 +32,11 @@ function App() {
         <Route path="/" element={<Home />}></Route>
         <Route path="/video/:videoId" element={<VideoDetails />}></Route>
         <Route path="/playlists" element={<Playlists />}></Route>
-        <Route
+        <Route path="/login" element={<Login />} />
+        <PrivateRoute
           path="/playlist/:playlistId"
           element={<PlaylistDetails />}
-        ></Route>
+        ></PrivateRoute>
       </Routes>
     </div>
   );
