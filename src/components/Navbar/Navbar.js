@@ -21,13 +21,13 @@ export default function Navbar() {
           <span className={styles.logoText}>FINSIGHT</span>
         </Link>
         <div className="row ml-auto">
-          <Link to="/">Home</Link>
-          <div className="space-x-1"></div>
-          <div className="space-x-1"></div>
           <Link to="/playlists">Playlists</Link>
           <div className="space-x-1"></div>
           <div className="space-x-1"></div>
-          <button onClick={authBtnHandler} className={`btn btn-solid-light`}>
+          <button
+            onClick={authBtnHandler}
+            className={`btn btn-solid-light btn-small`}
+          >
             {user ? "Log Out" : "Log In"}
           </button>
         </div>
