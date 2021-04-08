@@ -61,6 +61,21 @@ export const reducerFunc = (state, { type, payload }) => {
             : playlistItem
         ),
       };
+    case "DELETE_PLAYLIST":
+      console.log("DELETE IN REDUCER");
+      console.log(payload.playlistId);
+      console.log(
+        state.playlists.filter(
+          (playlistItem) => playlistItem.id !== payload.playlistId
+        )
+      );
+
+      return {
+        ...state,
+        playlists: state.playlists.filter(
+          (playlistItem) => playlistItem.id !== payload.playlistId
+        ),
+      };
     default:
       return state;
   }

@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useData } from "../../context/DataContext";
 import { VideoCard } from "../../components";
 import styles from "./PlaylistDetails.module.css";
@@ -11,6 +11,7 @@ export default function PlaylistDetails() {
     (playlistItem) => playlistItem.id === playlistId
   );
 
+  const [showDeleteModal, setshowDeleteModal] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [playlistName, setPlaylistName] = useState(playlist.name);
   const playlistNameEl = useRef(null);
@@ -28,12 +29,19 @@ export default function PlaylistDetails() {
   };
 
   return (
-    <div className={`container`}>
+    <div className={`container relative`}>
+      {showDeleteModal && (
+        <DeleteModal
+          setshowDeleteModal={setshowDeleteModal}
+          dispatch={dispatch}
+          playlistId={playlistId}
+        />
+      )}
       <div className="space-y-1"></div>
       <div className="space-y-1"></div>
       <div className={`flex justify-between items-center`}>
         <input
-          contentEditable
+          readOnly={!isEditMode}
           ref={playlistNameEl}
           className={`${styles.name}`}
           value={playlistName}
@@ -51,7 +59,10 @@ export default function PlaylistDetails() {
               {isEditMode ? "done" : "edit"}
             </span>
           </button>
-          <button className="btn btn-icon btn-small btn-ghost">
+          <button
+            onClick={() => setshowDeleteModal(() => true)}
+            className="btn btn-icon btn-small btn-ghost"
+          >
             <span class="material-icons-outlined">delete</span>
           </button>
         </div>
@@ -66,3 +77,48 @@ export default function PlaylistDetails() {
     </div>
   );
 }
+
+const DeleteModal = ({ setshowDeleteModal, playlistId }) => {
+  const { dispatch } = useData();
+  const navigate = useNavigate();
+
+  const isDefaultPlaylist = ["liked", "saved", "watch-later"].includes(
+    playlistId
+  );
+
+  const modalTitle = isDefaultPlaylist ? "Uh Oh!" : "Are you sure?";
+  const modalText = isDefaultPlaylist
+    ? "You cannot delete a default playlist."
+    : "Do you really want to delete your playlist? This will delete all your videos saved in the playlist. You cannot undo this action.";
+
+  const deletePlaylist = () => {
+    navigate("/playlists", { replace: true });
+    dispatch({ type: "DELETE_PLAYLIST", payload: { playlistId } });
+    setshowDeleteModal(() => false);
+  };
+
+  return (
+    <div className={`${styles.modalOuter}`}>
+      <div className={`${styles.modalInner}`}>
+        <h2>{modalTitle}</h2>
+        <p>{modalText}</p>
+        <div className="flex items-center justify-center">
+          <button
+            onClick={() => setshowDeleteModal(false)}
+            className="btn btn-outlined btn-small"
+          >
+            {isDefaultPlaylist ? "Okay" : "Cancel"}
+          </button>
+          {!isDefaultPlaylist && (
+            <button
+              onClick={deletePlaylist}
+              className="btn btn-solid btn-small"
+            >
+              Yes, Delete Playlist
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};

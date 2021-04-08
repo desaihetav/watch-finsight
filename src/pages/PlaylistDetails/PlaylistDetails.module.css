@@ -7,3 +7,22 @@
   border: 0;
   background-color: transparent;
 }
+
+.modalOuter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 9;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.modalInner {
+  background-color: var(--color-background-3);
+  padding: 1rem 2rem;
+  max-width: 40rem;
+}
