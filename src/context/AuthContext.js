@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
     JSON.parse(localStorage.getItem("authUser"))
   );
 
-  const loginWithCredentials = async (username, password) => {
+  const loginUserWithCredentials = async (username, password) => {
     try {
       const { success, data: user } = await fakeAuth(username, password);
       if (success) {
@@ -23,8 +23,13 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const logout = async (username, password) => {
+    localStorage?.removeItem("authUser");
+    setUser(null);
+  };
+
   return (
-    <AuthContext.Provider value={{ user, loginWithCredentials }}>
+    <AuthContext.Provider value={{ user, loginUserWithCredentials, logout }}>
       {children}
     </AuthContext.Provider>
   );

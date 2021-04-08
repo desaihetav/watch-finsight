@@ -1,7 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import styles from "./Navbar.module.css";
+import { useAuth } from "../../context";
 
 export default function Navbar() {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const { user, loginUserWithCredentials, logout } = useAuth();
+  const authBtnHandler = () => {
+    user ? logout() : navigate("/login", { state: { from: pathname } });
+  };
   return (
     <div className={`${styles.navOuter}`}>
       <div className="container row items-center">
@@ -20,7 +27,9 @@ export default function Navbar() {
           <Link to="/playlists">Playlists</Link>
           <div className="space-x-1"></div>
           <div className="space-x-1"></div>
-          <Link to="/playlist/liked">Playlist Details</Link>
+          <button onClick={authBtnHandler} className={`btn btn-solid-light`}>
+            {user ? "Log Out" : "Log In"}
+          </button>
         </div>
       </div>
     </div>

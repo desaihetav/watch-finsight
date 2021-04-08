@@ -7,14 +7,14 @@ import logo from "../../assets/images/logo_white.png";
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { user, loginWithCredentials } = useAuth();
+  const { user, loginUserWithCredentials } = useAuth();
 
   const { state } = useLocation();
   const navigate = useNavigate();
   console.log({ state });
 
   const loginHandler = async () => {
-    const authResult = await loginWithCredentials(username, password);
+    const authResult = await loginUserWithCredentials(username, password);
     if (authResult) {
       navigate(state?.from ? state.from : "/");
     }
