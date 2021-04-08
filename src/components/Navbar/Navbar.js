@@ -17,10 +17,10 @@ export default function Navbar() {
           <Link to="/">Home</Link>
           <div className="space-x-1"></div>
           <div className="space-x-1"></div>
-          <Link to="/categories">Categories</Link>
+          <Link to="/playlists">Playlists</Link>
           <div className="space-x-1"></div>
           <div className="space-x-1"></div>
-          <Link to="">Playlists</Link>
+          <Link to="/playlist/liked">Playlist Details</Link>
         </div>
       </div>
     </div>

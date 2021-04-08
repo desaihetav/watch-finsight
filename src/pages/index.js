@@ -1,4 +1,4 @@
 export { default as Home } from "./Home/Home";
-export { default as CategoryList } from "./CategoryList/CategoryList";
-export { default as CategoryDetails } from "./CategoryDetails/CategoryDetails";
+export { default as Playlists } from "./Playlists/Playlists";
+export { default as PlaylistDetails } from "./PlaylistDetails/PlaylistDetails";
 export { default as VideoDetails } from "./VideoDetails/VideoDetails";
