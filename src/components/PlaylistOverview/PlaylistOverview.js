@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import rightArrow from "../../assets/images/right_arrow_dark.svg";
 import { VideoOverviewCard } from "../../components";
 import styles from "./PlaylistOverview.module.css";
 
@@ -27,7 +26,7 @@ const PlaylistOverview = ({ playlist }) => {
           ></img> */}
         </Link>
       </div>
-      <div className="divider"></div>
+      {/* {/* <div className="divider"></div> */}
       <div className="space-y-1"></div>
       <div className={`flex overflow-scroll`}>
         {playlist.videos.length !== 0 ? (

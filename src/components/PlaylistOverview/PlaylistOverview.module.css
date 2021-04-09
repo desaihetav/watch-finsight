@@ -1,16 +1,17 @@
 .container {
-  background-color: var(--color-background-3);
+  background-color: var(--color-background-2);
   padding: 1rem;
   margin: 1rem 0;
 }
 
 .title {
+  color: var(--color-text-1);
   font-size: 1.125rem;
   margin: 0.125rem 0;
 }
 
 .subtitle {
-  opacity: 0.7;
+  color: var(--color-text-2);
 }
 
 @media screen and (min-width: 640px) {

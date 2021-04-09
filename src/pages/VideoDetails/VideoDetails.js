@@ -159,7 +159,7 @@ export default function VideoDetails() {
                               className="flex items-center"
                             >
                               <input
-                                className={`${styles.newPlaylistInput}`}
+                                className={`${styles.newPlaylistInput} input-field`}
                                 value={newPlaylistInput}
                                 onChange={(e) =>
                                   setNewPlaylistInput(() => e.target.value)

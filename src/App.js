@@ -9,13 +9,14 @@ import {
   Signup,
 } from "./pages";
 import { Navbar } from "./components";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useData } from "./context";
 import { PrivateRoute } from "./api/ProtectedRoute";
 
 function App() {
   const { videos, dispatch } = useData();
+  const [theme, setTheme] = useState("dark");
 
   const fetchData = async () => {
     try {
@@ -28,13 +29,25 @@ function App() {
     }
   };
 
+  const initializeTheme = () => {
+    const currentTheme = localStorage.getItem("theme")
+      ? localStorage.getItem("theme")
+      : null;
+
+    if (currentTheme) {
+      document.documentElement.setAttribute("data-theme", currentTheme);
+      setTheme(currentTheme);
+    }
+  };
+
   useEffect(() => {
     videos.length === 0 && fetchData();
+    initializeTheme();
   }, []);
 
   return (
     <div>
-      <Navbar />
+      <Navbar theme={theme} setTheme={setTheme} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/video/:videoId" element={<VideoDetails />} />

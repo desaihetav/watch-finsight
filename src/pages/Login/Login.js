@@ -13,12 +13,13 @@ export default function Login() {
   const { state } = useLocation();
   const navigate = useNavigate();
 
-  const loginHandler = async () => {
+  const loginHandler = async (e) => {
+    e.preventDefault();
     setLoginStatus("Loading");
     const authResult = await loginUserWithCredentials(username, password);
     if (authResult) {
       setLoginStatus("Success");
-      navigate(state?.from ? state.from : "/");
+      navigate(state?.from ? state.from : "/", { replace: true });
     } else {
       setLoginStatus("Failed");
     }
@@ -49,32 +50,34 @@ export default function Login() {
             </div>
           )}
           <div className="space-y-1"></div>
-          <input
-            placeholder="Enter Username"
-            className={`input-field ${styles.input} ${
-              loginStatus === "Failed" && "input-error"
-            }`}
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(() => e.target.value)}
-          />
+          <form onSubmit={(e) => loginHandler(e)}>
+            <input
+              placeholder="Enter Username"
+              className={`input-field ${styles.input} ${
+                loginStatus === "Failed" && "input-error"
+              }`}
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(() => e.target.value)}
+            />
 
-          <input
-            placeholder="Enter Password"
-            className={`input-field ${styles.input} ${
-              loginStatus === "Failed" && "input-error"
-            }`}
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(() => e.target.value)}
-          />
-          <div className="space-y-1"></div>
-          <button
-            onClick={loginHandler}
-            className={`btn btn-solid btn-large w-full ${styles.input}`}
-          >
-            {loginStatus === "Loading" ? "Loggin In..." : "Login"}
-          </button>
+            <input
+              placeholder="Enter Password"
+              className={`input-field ${styles.input} ${
+                loginStatus === "Failed" && "input-error"
+              }`}
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(() => e.target.value)}
+            />
+            <div className="space-y-1"></div>
+            <button
+              type="submit"
+              className={`btn btn-solid w-full ${styles.input}`}
+            >
+              {loginStatus === "Loading" ? "Loggin In..." : "Login"}
+            </button>
+          </form>
           <div className="space-y-1"></div>
           <button
             onClick={() => navigate("/signup", { replace: "true" })}

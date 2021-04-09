@@ -23,7 +23,7 @@ export default function Signup() {
     );
     if (authResult) {
       setSignupStatus("Success");
-      navigate(state?.from ? state.from : "/");
+      navigate(state?.from ? state.from : "/", { replace: true });
     } else {
       setSignupStatus("Failed");
     }
@@ -84,7 +84,7 @@ export default function Signup() {
           <div className="space-y-1"></div>
           <button
             onClick={signupHandler}
-            className={`btn btn-solid btn-large w-full ${styles.input}`}
+            className={`btn btn-solid w-full ${styles.input}`}
           >
             {signupStatus === "Loading" ? "Signing Up..." : "Signup"}
           </button>
