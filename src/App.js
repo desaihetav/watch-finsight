@@ -39,7 +39,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/video/:videoId" element={<VideoDetails />} />
         <Route path="/login" element={<Login />} />
-        {/* <Route path="/signup" element={<Signup />} /> */}
+        <Route path="/signup" element={<Signup />} />
         <PrivateRoute path="/playlists" element={<Playlists />} />
         <PrivateRoute
           path="/playlist/:playlistId"

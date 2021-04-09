@@ -86,11 +86,14 @@ export default function Signup() {
             onClick={signupHandler}
             className={`btn btn-solid btn-large w-full ${styles.input}`}
           >
-            {signupStatus === "Loading" ? "Loggin In..." : "Login"}
+            {signupStatus === "Loading" ? "Signing Up..." : "Signup"}
           </button>
           <div className="space-y-1"></div>
-          <button className={`btn btn-ghost w-full ${styles.input}`}>
-            Not A Member Yet? Sign Up
+          <button
+            onClick={() => navigate("/login", { replace: "true" })}
+            className={`btn btn-ghost w-full ${styles.input}`}
+          >
+            Already a member? Login instead
           </button>
         </div>
       </div>

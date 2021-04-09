@@ -77,7 +77,7 @@ export default function Login() {
           </button>
           <div className="space-y-1"></div>
           <button
-            // onClick={() => navigate("/signup")}
+            onClick={() => navigate("/signup", { replace: "true" })}
             className={`btn btn-ghost w-full ${styles.input}`}
           >
             Not A Member Yet? Sign Up
