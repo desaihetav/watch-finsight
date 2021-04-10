@@ -6,7 +6,7 @@ import logo from "../../assets/images/logo_white.png";
 
 export default function Signup() {
   const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [signupStatus, setSignupStatus] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -19,11 +19,12 @@ export default function Signup() {
     user && navigate("/", { replace: true });
   }, []);
 
-  const signupHandler = async () => {
+  const signupHandler = async (e) => {
+    e.preventDefault();
     setSignupStatus("Loading");
     const { message, success } = await createUserWithCredentials(
       name,
-      username,
+      email,
       password
     );
     if (success) {
@@ -60,40 +61,42 @@ export default function Signup() {
             </div>
           )}
           <div className="space-y-1"></div>
-          <input
-            placeholder="Enter Name"
-            className={`input-field ${styles.input} ${
-              signupStatus === "Failed" && "input-error"
-            }`}
-            type="text"
-            value={name}
-            onChange={(e) => setName(() => e.target.value)}
-          />
-          <input
-            placeholder="Enter Username"
-            className={`input-field ${styles.input} ${
-              signupStatus === "Failed" && "input-error"
-            }`}
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(() => e.target.value)}
-          />
-          <input
-            placeholder="Enter Password"
-            className={`input-field ${styles.input} ${
-              signupStatus === "Failed" && "input-error"
-            }`}
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(() => e.target.value)}
-          />
-          <div className="space-y-1"></div>
-          <button
-            onClick={signupHandler}
-            className={`btn btn-solid w-full ${styles.input}`}
-          >
-            {signupStatus === "Loading" ? "Signing Up..." : "Signup"}
-          </button>
+          <form onSubmit={(e) => signupHandler(e)}>
+            <input
+              placeholder="Enter Name"
+              className={`input-field ${styles.input} ${
+                signupStatus === "Failed" && "input-error"
+              }`}
+              type="text"
+              value={name}
+              onChange={(e) => setName(() => e.target.value)}
+            />
+            <input
+              placeholder="Enter Username"
+              className={`input-field ${styles.input} ${
+                signupStatus === "Failed" && "input-error"
+              }`}
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(() => e.target.value)}
+            />
+            <input
+              placeholder="Enter Password"
+              className={`input-field ${styles.input} ${
+                signupStatus === "Failed" && "input-error"
+              }`}
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(() => e.target.value)}
+            />
+            <div className="space-y-1"></div>
+            <button
+              type="submit"
+              className={`btn btn-solid w-full ${styles.input}`}
+            >
+              {signupStatus === "Loading" ? "Signing Up..." : "Signup"}
+            </button>
+          </form>
           <div className="space-y-1"></div>
           <button
             onClick={() => navigate("/login", { replace: "true" })}

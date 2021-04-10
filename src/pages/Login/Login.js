@@ -5,7 +5,7 @@ import styles from "./Login.module.css";
 import logo from "../../assets/images/logo_white.png";
 
 export default function Login() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginStatus, setLoginStatus] = useState("Login");
   const [errorMessage, setErrorMessage] = useState("");
@@ -22,7 +22,7 @@ export default function Login() {
     e.preventDefault();
     setLoginStatus("Loading");
     const { message, success } = await loginUserWithCredentials(
-      username,
+      email,
       password
     );
     if (success) {
@@ -61,13 +61,13 @@ export default function Login() {
           <div className="space-y-1"></div>
           <form onSubmit={(e) => loginHandler(e)}>
             <input
-              placeholder="Enter Username"
+              placeholder="Enter Email"
               className={`input-field ${styles.input} ${
                 loginStatus === "Failed" && "input-error"
               }`}
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(() => e.target.value)}
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(() => e.target.value)}
             />
 
             <input

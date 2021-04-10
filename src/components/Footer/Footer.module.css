@@ -1,6 +1,5 @@
 .footerOuter {
   display: flex;
-  margin-top: 4rem;
   padding: 5rem 0;
   align-items: center;
   background-color: var(--color-background-2);
