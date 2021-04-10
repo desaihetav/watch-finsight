@@ -8,6 +8,7 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginStatus, setLoginStatus] = useState("Login");
+  const [errorMessage, setErrorMessage] = useState("");
   const { user, loginUserWithCredentials } = useAuth();
 
   const { state } = useLocation();
@@ -20,11 +21,15 @@ export default function Login() {
   const loginHandler = async (e) => {
     e.preventDefault();
     setLoginStatus("Loading");
-    const authResult = await loginUserWithCredentials(username, password);
-    if (authResult) {
+    const { message, success } = await loginUserWithCredentials(
+      username,
+      password
+    );
+    if (success) {
       setLoginStatus("Success");
       navigate(state?.from ? state.from : "/", { replace: true });
     } else {
+      setErrorMessage(message);
       setLoginStatus("Failed");
     }
   };
@@ -50,7 +55,7 @@ export default function Login() {
                 {" "}
                 error_outline{" "}
               </span>
-              Invalid Credentials. Please try again.
+              {errorMessage}
             </div>
           )}
           <div className="space-y-1"></div>

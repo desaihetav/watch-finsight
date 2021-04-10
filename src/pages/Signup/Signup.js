@@ -9,6 +9,7 @@ export default function Signup() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [signupStatus, setSignupStatus] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const { user, createUserWithCredentials } = useAuth();
 
   const { state } = useLocation();
@@ -20,16 +21,17 @@ export default function Signup() {
 
   const signupHandler = async () => {
     setSignupStatus("Loading");
-    const authResult = await createUserWithCredentials(
+    const { message, success } = await createUserWithCredentials(
       name,
       username,
       password
     );
-    if (authResult) {
+    if (success) {
       setSignupStatus("Success");
       navigate(state?.from ? state.from : "/", { replace: true });
     } else {
       setSignupStatus("Failed");
+      setErrorMessage(message);
     }
   };
 
@@ -54,7 +56,7 @@ export default function Signup() {
                 {" "}
                 error_outline{" "}
               </span>
-              User with entered username already exists
+              {errorMessage}
             </div>
           )}
           <div className="space-y-1"></div>

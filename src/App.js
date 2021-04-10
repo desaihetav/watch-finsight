@@ -8,7 +8,7 @@ import {
   Login,
   Signup,
 } from "./pages";
-import { Navbar } from "./components";
+import { Navbar, Footer } from "./components";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useData } from "./context";
@@ -21,7 +21,7 @@ function App() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "https://watch-finsight-default-rtdb.firebaseio.com/videos.json"
+        "https://watch-finsight.desaihetav.repl.co/videos"
       );
       dispatch({ type: "INITIALIZE_VIDEOS", payload: response.data });
     } catch (error) {
@@ -37,6 +37,8 @@ function App() {
     if (currentTheme) {
       document.documentElement.setAttribute("data-theme", currentTheme);
       setTheme(currentTheme);
+    } else {
+      document.documentElement.setAttribute("data-theme", theme);
     }
   };
 
@@ -59,6 +61,7 @@ function App() {
           element={<PlaylistDetails />}
         />
       </Routes>
+      <Footer />
     </div>
   );
 }

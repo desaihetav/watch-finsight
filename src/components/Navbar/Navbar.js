@@ -38,7 +38,6 @@ export default function Navbar({ theme, setTheme }) {
         <div className="row ml-auto">
           <Link to="/playlists">Playlists</Link>
           <div className="space-x-1"></div>
-          <div className="space-x-1"></div>
           <button
             onClick={authBtnHandler}
             className={`btn btn-solid-reverse btn-small`}

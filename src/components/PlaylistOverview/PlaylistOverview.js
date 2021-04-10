@@ -28,7 +28,7 @@ const PlaylistOverview = ({ playlist }) => {
       </div>
       {/* {/* <div className="divider"></div> */}
       <div className="space-y-1"></div>
-      <div className={`flex overflow-scroll`}>
+      <div className={`flex overflow-auto`}>
         {playlist.videos.length !== 0 ? (
           playlist.videos
             .slice(0, 5)
