@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context";
 import styles from "./Login.module.css";
@@ -8,10 +8,14 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginStatus, setLoginStatus] = useState("Login");
-  const { loginUserWithCredentials } = useAuth();
+  const { user, loginUserWithCredentials } = useAuth();
 
   const { state } = useLocation();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    user && navigate("/", { replace: true });
+  }, []);
 
   const loginHandler = async (e) => {
     e.preventDefault();

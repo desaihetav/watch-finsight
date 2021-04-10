@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context";
 import styles from "./Signup.module.css";
@@ -9,10 +9,14 @@ export default function Signup() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [signupStatus, setSignupStatus] = useState("");
-  const { createUserWithCredentials } = useAuth();
+  const { user, createUserWithCredentials } = useAuth();
 
   const { state } = useLocation();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    user && navigate("/", { replace: true });
+  }, []);
 
   const signupHandler = async () => {
     setSignupStatus("Loading");
