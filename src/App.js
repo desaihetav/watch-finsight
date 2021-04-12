@@ -7,6 +7,7 @@ import {
   PlaylistDetails,
   Login,
   Signup,
+  Account,
 } from "./pages";
 import { Navbar, Footer } from "./components";
 import { useEffect, useState } from "react";
@@ -60,6 +61,7 @@ function App() {
           path="/playlist/:playlistId"
           element={<PlaylistDetails />}
         />
+        <PrivateRoute path="/account" element={<Account />} />
       </Routes>
       <Footer />
     </div>

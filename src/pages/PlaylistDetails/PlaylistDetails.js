@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useData } from "../../context";
 import { VideoCard } from "../../components";
 import styles from "./PlaylistDetails.module.css";
@@ -29,7 +29,7 @@ export default function PlaylistDetails() {
   };
 
   return (
-    <div className={`container relative`}>
+    <div className={`container relative ${styles.pageContainer}`}>
       {showDeleteModal && (
         <DeleteModal
           setshowDeleteModal={setshowDeleteModal}
@@ -75,9 +75,14 @@ export default function PlaylistDetails() {
             </li>
           ))
         ) : (
-          <h2 className={`w-full text-center my-8`}>
-            No video is this playlist
-          </h2>
+          <div className="flex flex-col items-center justify-center flex-grow-1">
+            <h2 className={`w-full text-center my-8`}>
+              No video is this playlist
+            </h2>
+            <Link to="/" className={`btn btn-solid`}>
+              Explore
+            </Link>
+          </div>
         )}
       </ul>
     </div>

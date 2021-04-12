@@ -29,21 +29,6 @@ export const AuthProvider = ({ children }) => {
   };
 
   const createUserWithCredentials = async (name, email, password) => {
-    // return new Promise((resolve, reject) => {
-    //   setTimeout(() => {
-    //     const user = findUserByUsername(username);
-    //     if (user) {
-    //       reject({ success: false, status: 401 });
-    //     } else {
-    //       const newUser = { name, username, password };
-    //       setUser(newUser);
-    //       setAllUsers((allUsers) => [...allUsers, newUser]);
-    //       localStorage?.setItem("authUser", JSON.stringify(user));
-    //       resolve({ success: true, status: 200, data: user });
-    //       return newUser;
-    //     }
-    //   }, 1500);
-    // });
     try {
       const {
         data: { user, success, message },
@@ -62,7 +47,24 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logout = async (username, password) => {
+  const updateAccountDetails = async (id, name, email, password) => {
+    const response = await axios.post(
+      "https://watch-finsight.desaihetav.repl.co/account",
+      {
+        id,
+        name,
+        email,
+        password,
+      }
+    );
+    console.log(response);
+    if (response.data.success) {
+      setUser(response.data.user);
+      localStorage?.setItem("authUser", JSON.stringify(response.data.user));
+    }
+  };
+
+  const logout = async () => {
     localStorage?.removeItem("authUser");
     setUser(null);
   };
@@ -73,6 +75,7 @@ export const AuthProvider = ({ children }) => {
         user,
         createUserWithCredentials,
         loginUserWithCredentials,
+        updateAccountDetails,
         logout,
       }}
     >
