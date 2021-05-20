@@ -4,17 +4,23 @@ import { Link } from "react-router-dom";
 
 const VideoOverviewCard = ({ videoId }) => {
   const { videos } = useData();
-
-  const findVideoById = () => videos.find((video) => video.id === videoId);
-
-  const { id, title, thumbnailURL, channelName } = findVideoById();
+  // const findVideoById = () => videos.find((video) => video.videoId === videoId);
+  const video = videos.find((video) => video.videoId === videoId);
+  // const { videoId: id, title, thumbnailURL, channelName } = findVideoById();
 
   return (
-    <Link to={`/video/${id}`} className={`flex flex-col ${styles.card}`}>
-      <img alt={title} src={thumbnailURL} className={`${styles.thumbnail}`} />
+    <Link
+      to={`/video/${video.videoId}`}
+      className={`flex flex-col ${styles.card}`}
+    >
+      <img
+        alt={video.title}
+        src={video.thumbnailURL}
+        className={`${styles.thumbnail}`}
+      />
       <div className={`${styles.content}`}>
-        <span className={`${styles.title}`}>{title}</span>
-        <span className={`${styles.subtitle}`}>{channelName}</span>
+        <span className={`${styles.title}`}>{video.title}</span>
+        <span className={`${styles.subtitle}`}>{video.channelName}</span>
       </div>
     </Link>
   );

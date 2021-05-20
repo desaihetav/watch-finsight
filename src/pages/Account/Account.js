@@ -30,7 +30,7 @@ export default function Account() {
             isEditMode ? "btn-solid" : "btn-ghost"
           }`}
         >
-          <span class="material-icons-outlined">
+          <span className="material-icons-outlined">
             {isEditMode ? "done" : "edit"}
           </span>
         </button>

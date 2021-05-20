@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import styles from "./Navbar.module.css";
-import { useAuth } from "../../context";
+import { useAuth, useData } from "../../context";
 import logoWhite from "../../assets/images/logo_white.svg";
 
 export default function Navbar({ theme, setTheme }) {
@@ -122,6 +122,7 @@ export default function Navbar({ theme, setTheme }) {
 
 const LogoutModal = ({ setShowLogoutModal }) => {
   const { logout } = useAuth();
+  const { dispatch } = useData();
   return (
     <div className={`${styles.modalOuter}`}>
       <div className={`${styles.modalInner}`}>
@@ -137,6 +138,7 @@ const LogoutModal = ({ setShowLogoutModal }) => {
           <button
             onClick={() => {
               logout();
+              dispatch({ type: "CLEAR_PLAYLISTS" });
               setShowLogoutModal(false);
             }}
             className="btn btn-solid btn-small"

@@ -12,19 +12,34 @@ import {
 import { Navbar, Footer } from "./components";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useData } from "./context";
+import { useAuth, useData } from "./context";
 import { PrivateRoute } from "./api/ProtectedRoute";
 
 function App() {
   const { videos, dispatch } = useData();
+  const { user } = useAuth();
   const [theme, setTheme] = useState("dark");
 
-  const fetchData = async () => {
+  const fetchVideosData = async () => {
     try {
       const response = await axios.get(
         "https://watch-finsight.desaihetav.repl.co/videos"
       );
       dispatch({ type: "INITIALIZE_VIDEOS", payload: response.data.videos });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchPlaylistsData = async () => {
+    try {
+      const response = await axios.get(
+        `https://watch-finsight.desaihetav.repl.co/playlists/${user._id}`
+      );
+      dispatch({
+        type: "INITIALIZE_PLAYLISTS",
+        payload: response.data.playlists,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -44,9 +59,13 @@ function App() {
   };
 
   useEffect(() => {
-    videos.length === 0 && fetchData();
+    fetchVideosData();
     initializeTheme();
   }, []);
+
+  useEffect(() => {
+    fetchPlaylistsData();
+  }, [user]);
 
   return (
     <div>

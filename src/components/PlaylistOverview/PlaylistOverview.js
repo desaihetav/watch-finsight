@@ -16,9 +16,9 @@ const PlaylistOverview = ({ playlist }) => {
         </div>
         <Link
           className={`btn btn-ghost btn-small btn-icon`}
-          to={`/playlist/${playlist.id}`}
+          to={`/playlist/${playlist._id}`}
         >
-          <span class="material-icons-outlined">launch</span>
+          <span className="material-icons-outlined">launch</span>
           {/* <img
             alt="right arrow"
             className={`btn-icon-right`}
@@ -32,7 +32,12 @@ const PlaylistOverview = ({ playlist }) => {
         {playlist.videos.length !== 0 ? (
           playlist.videos
             .slice(0, 5)
-            .map((videoItem) => <VideoOverviewCard videoId={videoItem} />)
+            .map((videoItem) => (
+              <VideoOverviewCard
+                key={videoItem.videoId}
+                videoId={videoItem.videoId}
+              />
+            ))
         ) : (
           <div
             className={`text-center flex justify-center items-center w-full my-4`}

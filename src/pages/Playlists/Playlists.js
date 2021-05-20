@@ -8,7 +8,7 @@ export default function Playlists() {
       <h1 className="my-8">Playlists</h1>
       {playlists &&
         playlists.map((playlistItem) => (
-          <PlaylistOverview playlist={playlistItem} />
+          <PlaylistOverview key={playlistItem._id} playlist={playlistItem} />
         ))}
     </div>
   );

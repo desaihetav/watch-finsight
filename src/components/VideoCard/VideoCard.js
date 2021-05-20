@@ -5,7 +5,7 @@ import { useData } from "../../context";
 export default function VideoCard({ videoItemId }) {
   const { videos } = useData();
   const findVideoById = () =>
-    videos.find((videoItem) => videoItem.videoId === videoItemId);
+    videos?.find((videoItem) => videoItem.videoId === videoItemId);
   const {
     videoId,
     thumbnailURL,
@@ -23,9 +23,6 @@ export default function VideoCard({ videoItemId }) {
           <img alt="" src={thumbnailURL} className={`${styles.cardImage}`} />
 
           <div className={`${styles.cardContent}`}>
-            {/* <div className="card-badge">
-            <span>new</span>
-          </div> */}
             <p className={`${styles.cardSubtitle}`}>
               {channelName} • {publishedDate}
             </p>

@@ -52,8 +52,8 @@ export default function Signup() {
           </span>
           <div className="space-y-1"></div>
           {signupStatus === "Failed" && (
-            <div class="alert alert-error">
-              <span class="material-icons-round alert-icon">
+            <div className="alert alert-error">
+              <span className="material-icons-round alert-icon">
                 {" "}
                 error_outline{" "}
               </span>

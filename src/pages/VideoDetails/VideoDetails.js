@@ -3,6 +3,7 @@ import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useData, useAuth } from "../../context";
 import ReactPlayer from "react-player";
 import styles from "./VideoDetails.module.css";
+import axios from "axios";
 
 export default function VideoDetails() {
   const { videos, playlists, dispatch } = useData();
@@ -18,40 +19,66 @@ export default function VideoDetails() {
       : setShowAuthModal(true);
   };
 
-  const video = videos.find((videoItem) => videoItem.videoId === videoId);
+  const video = videos?.find((videoItem) => videoItem.videoId === videoId);
 
-  const getPlaylistById = (id) =>
-    playlists.filter((playlistItem) => playlistItem.id === id)?.[0];
-
-  const getPlaylistByName = (name) =>
-    playlists.filter((playlistItem) => playlistItem.name === name)?.[0];
-
-  const isInPlaylist = (playlistId, videoId) => {
-    const playlist = getPlaylistById(playlistId);
-    return playlist.videos.find((videoItem) => videoItem === video.id);
+  const getPlaylistById = (id) => {
+    return playlists.filter((playlistItem) => playlistItem._id === id)?.[0];
   };
 
-  const createPlaylist = (e) => {
+  const getPlaylistByName = (name) => {
+    return playlists.filter((playlistItem) => playlistItem.name === name)?.[0];
+  };
+
+  const isInPlaylistByName = (playlistName) => {
+    const playlist = getPlaylistByName(playlistName);
+    return playlist.videos.find((videoItem) => videoItem._id === video._id);
+  };
+
+  const isInPlaylistById = (playlistId) => {
+    const playlist = getPlaylistById(playlistId);
+    return playlist.videos.find((videoItem) => videoItem._id === video._id);
+  };
+
+  const createPlaylist = async (e) => {
     e.preventDefault();
     setNewPlaylistInput("");
-    newPlaylistInput &&
-      !getPlaylistByName(newPlaylistInput) &&
+    if (newPlaylistInput && !getPlaylistByName(newPlaylistInput)) {
+      const newPlaylistResponse = await axios.post(
+        `https://watch-finsight.desaihetav.repl.co/playlists`,
+        {
+          owner: user._id,
+          name: newPlaylistInput,
+          videos: [video._id],
+        }
+      );
       dispatch({
         type: "CREATE_PLAYLIST",
-        payload: { playlistName: newPlaylistInput, videoId: video.id },
+        payload: {
+          _id: newPlaylistResponse.data.playlist._id,
+          playlistName: newPlaylistInput,
+          videoId: video._id,
+        },
       });
+    }
   };
 
-  const toggleInPlaylist = (playlistId) => {
-    user
-      ? dispatch({
-          type: "TOGGLE_IN_PLAYLIST",
-          payload: { videoId: video.id, playlistId: playlistId },
-        })
-      : setShowAuthModal(true);
+  const toggleInPlaylist = async (playlistId) => {
+    if (!user) {
+      return setShowAuthModal(true);
+    }
+    dispatch({
+      type: "TOGGLE_IN_PLAYLIST",
+      payload: { videoId: video._id, playlistId: playlistId },
+    });
+    const toggleInPlaylistResponse = await axios.post(
+      `https://watch-finsight.desaihetav.repl.co/playlists/${playlistId}`,
+      {
+        videoId: video._id,
+      }
+    );
   };
 
-  return (
+  return videos.length && playlists.length ? (
     <div>
       {showAuthModal && (
         <AuthModal setShowAuthModal={setShowAuthModal} dispatch={dispatch} />
@@ -96,28 +123,40 @@ export default function VideoDetails() {
                   className={`flex flex-wrap justify-around ${styles.buttonBar}`}
                 >
                   <button
-                    onClick={() => toggleInPlaylist("saved")}
+                    onClick={() =>
+                      toggleInPlaylist(getPlaylistByName("Saved Videos")._id)
+                    }
                     className={`btn btn-ghost btn-icon btn-small`}
                   >
                     <span className={`material-icons-round`}>
-                      {isInPlaylist("saved") ? "bookmark" : "bookmark_border"}
+                      {isInPlaylistByName("Saved Videos")
+                        ? "bookmark"
+                        : "bookmark_border"}
                     </span>
                   </button>
                   <button
-                    onClick={() => toggleInPlaylist("liked")}
+                    onClick={() =>
+                      toggleInPlaylist(getPlaylistByName("Liked Videos")._id)
+                    }
                     className={`btn btn-ghost btn-icon btn-small`}
                   >
                     <span className={`material-icons-round`}>
-                      {isInPlaylist("liked") ? "favorite" : "favorite_border"}
+                      {isInPlaylistByName("Liked Videos")
+                        ? "favorite"
+                        : "favorite_border"}
                     </span>
                   </button>
                   <button
-                    onClick={() => toggleInPlaylist("watch-later")}
+                    onClick={() =>
+                      toggleInPlaylist(
+                        getPlaylistByName("Watch Later Videos")._id
+                      )
+                    }
                     className={`btn btn-ghost btn-icon btn-small`}
                   >
                     <span
                       className={`${
-                        isInPlaylist("watch-later")
+                        isInPlaylistByName("Watch Later Videos")
                           ? "material-icons"
                           : "material-icons-outlined"
                       }`}
@@ -138,13 +177,16 @@ export default function VideoDetails() {
                       <div className={`${styles.playlistMenu}`}>
                         <ul>
                           {playlists &&
-                            playlists.map((playlistItem, idx) => (
-                              <li className={`${styles.playlistMenuItem}`}>
+                            playlists.map((playlistItem) => (
+                              <li
+                                key={playlistItem._id}
+                                className={`${styles.playlistMenuItem}`}
+                              >
                                 <input
-                                  checked={isInPlaylist(playlistItem.id)}
+                                  checked={isInPlaylistById(playlistItem._id)}
                                   type="checkbox"
                                   onChange={() =>
-                                    toggleInPlaylist(playlistItem.id)
+                                    toggleInPlaylist(playlistItem._id)
                                   }
                                   className="mr-4"
                                 />
@@ -240,6 +282,8 @@ export default function VideoDetails() {
         </div>
       )}
     </div>
+  ) : (
+    <h1>Loading...</h1>
   );
 }
 

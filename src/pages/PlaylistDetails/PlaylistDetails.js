@@ -7,13 +7,13 @@ import styles from "./PlaylistDetails.module.css";
 export default function PlaylistDetails() {
   const { playlistId } = useParams();
   const { playlists, dispatch } = useData();
-  const playlist = playlists.find(
-    (playlistItem) => playlistItem.id === playlistId
+  const playlist = playlists?.find(
+    (playlistItem) => playlistItem._id === playlistId
   );
 
   const [showDeleteModal, setshowDeleteModal] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
-  const [playlistName, setPlaylistName] = useState(playlist.name);
+  const [playlistName, setPlaylistName] = useState(playlist?.name);
   const playlistNameEl = useRef(null);
 
   const editBtnClickHandler = () => {
@@ -22,13 +22,13 @@ export default function PlaylistDetails() {
     } else {
       dispatch({
         type: "UPDATE_PLAYLIST_NAME",
-        payload: { id: playlist.id, name: playlistName },
+        payload: { _id: playlist._id, name: playlistName },
       });
     }
     setIsEditMode((isEditMode) => !isEditMode);
   };
 
-  return (
+  return playlist ? (
     <div className={`container relative ${styles.pageContainer}`}>
       {showDeleteModal && (
         <DeleteModal
@@ -55,7 +55,7 @@ export default function PlaylistDetails() {
               isEditMode ? "btn-solid" : "btn-ghost"
             }`}
           >
-            <span class="material-icons-outlined">
+            <span className="material-icons-outlined">
               {isEditMode ? "done" : "edit"}
             </span>
           </button>
@@ -63,15 +63,15 @@ export default function PlaylistDetails() {
             onClick={() => setshowDeleteModal(() => true)}
             className="btn btn-icon btn-small btn-ghost"
           >
-            <span class="material-icons-outlined">delete</span>
+            <span className="material-icons-outlined">delete</span>
           </button>
         </div>
       </div>
       <ul className="flex flex-col w-full">
-        {playlist.videos.length !== 0 ? (
-          playlist.videos.map((videoItem) => (
-            <li className="w-full">
-              <VideoCard videoId={videoItem} />
+        {playlist?.videos.length !== 0 ? (
+          playlist?.videos?.map((videoItem) => (
+            <li key={videoItem.videoId} className="w-full">
+              <VideoCard videoItemId={videoItem.videoId} />
             </li>
           ))
         ) : (
@@ -86,6 +86,8 @@ export default function PlaylistDetails() {
         )}
       </ul>
     </div>
+  ) : (
+    <h1>Loading...</h1>
   );
 }
 
