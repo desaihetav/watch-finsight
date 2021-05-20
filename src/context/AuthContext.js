@@ -25,6 +25,7 @@ export const AuthProvider = ({ children }) => {
       return { user, message, success };
     } catch (error) {
       console.log(error);
+      return { message: error.message, success: false };
     }
   };
 
@@ -44,6 +45,7 @@ export const AuthProvider = ({ children }) => {
       return { user, message, success };
     } catch (error) {
       console.log(error);
+      return { message: error.message, success: false };
     }
   };
 
