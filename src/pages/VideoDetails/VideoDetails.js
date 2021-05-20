@@ -32,12 +32,12 @@ export default function VideoDetails() {
 
   const isInPlaylistByName = (playlistName) => {
     const playlist = getPlaylistByName(playlistName);
-    return playlist?.videos.find((videoItem) => videoItem._id === video._id);
+    return playlist?.videos.find((videoItem) => videoItem === video._id);
   };
 
   const isInPlaylistById = (playlistId) => {
     const playlist = getPlaylistById(playlistId);
-    return playlist?.videos.find((videoItem) => videoItem._id === video._id);
+    return playlist?.videos.find((videoItem) => videoItem === video._id);
   };
 
   const createPlaylist = async (e) => {
