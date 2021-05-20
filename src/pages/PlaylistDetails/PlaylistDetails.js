@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useData } from "../../context";
-import { VideoCard } from "../../components";
+import { Loading, VideoCard } from "../../components";
 import styles from "./PlaylistDetails.module.css";
 
 export default function PlaylistDetails() {
@@ -87,7 +87,7 @@ export default function PlaylistDetails() {
       </ul>
     </div>
   ) : (
-    <h1>Loading...</h1>
+    <Loading />
   );
 }
 

@@ -4,6 +4,7 @@ import { useData, useAuth } from "../../context";
 import ReactPlayer from "react-player";
 import styles from "./VideoDetails.module.css";
 import axios from "axios";
+import { Loading } from "../../components";
 
 export default function VideoDetails() {
   const { videos, playlists, dispatch } = useData();
@@ -22,21 +23,21 @@ export default function VideoDetails() {
   const video = videos?.find((videoItem) => videoItem.videoId === videoId);
 
   const getPlaylistById = (id) => {
-    return playlists.filter((playlistItem) => playlistItem._id === id)?.[0];
+    return playlists?.filter((playlistItem) => playlistItem._id === id)?.[0];
   };
 
   const getPlaylistByName = (name) => {
-    return playlists.filter((playlistItem) => playlistItem.name === name)?.[0];
+    return playlists?.filter((playlistItem) => playlistItem.name === name)?.[0];
   };
 
   const isInPlaylistByName = (playlistName) => {
     const playlist = getPlaylistByName(playlistName);
-    return playlist.videos.find((videoItem) => videoItem._id === video._id);
+    return playlist?.videos.find((videoItem) => videoItem._id === video._id);
   };
 
   const isInPlaylistById = (playlistId) => {
     const playlist = getPlaylistById(playlistId);
-    return playlist.videos.find((videoItem) => videoItem._id === video._id);
+    return playlist?.videos.find((videoItem) => videoItem._id === video._id);
   };
 
   const createPlaylist = async (e) => {
@@ -78,7 +79,11 @@ export default function VideoDetails() {
     );
   };
 
-  return videos.length && playlists.length ? (
+  const hasDataLoaded = user
+    ? videos.length && playlists.length
+    : videos.length;
+
+  return hasDataLoaded ? (
     <div>
       {showAuthModal && (
         <AuthModal setShowAuthModal={setShowAuthModal} dispatch={dispatch} />
@@ -283,7 +288,7 @@ export default function VideoDetails() {
       )}
     </div>
   ) : (
-    <h1>Loading...</h1>
+    <Loading />
   );
 }
 
