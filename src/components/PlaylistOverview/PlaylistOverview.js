@@ -33,10 +33,7 @@ const PlaylistOverview = ({ playlist }) => {
           playlist.videos
             .slice(0, 5)
             .map((videoItem) => (
-              <VideoOverviewCard
-                key={videoItem.videoId}
-                videoId={videoItem.videoId}
-              />
+              <VideoOverviewCard key={videoItem} videoId={videoItem} />
             ))
         ) : (
           <div

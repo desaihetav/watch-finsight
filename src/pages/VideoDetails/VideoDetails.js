@@ -44,22 +44,27 @@ export default function VideoDetails() {
     e.preventDefault();
     setNewPlaylistInput("");
     if (newPlaylistInput && !getPlaylistByName(newPlaylistInput)) {
-      const newPlaylistResponse = await axios.post(
-        `https://watch-finsight.desaihetav.repl.co/playlists`,
-        {
-          owner: user._id,
-          name: newPlaylistInput,
-          videos: [video._id],
-        }
-      );
-      dispatch({
-        type: "CREATE_PLAYLIST",
-        payload: {
-          _id: newPlaylistResponse.data.playlist._id,
-          playlistName: newPlaylistInput,
-          videoId: video._id,
-        },
-      });
+      try {
+        const newPlaylistResponse = await axios.post(
+          `https://watch-finsight.desaihetav.repl.co/playlists`,
+          {
+            owner: user._id,
+            name: newPlaylistInput,
+            videos: [video._id],
+          }
+        );
+        newPlaylistResponse.data.success &&
+          dispatch({
+            type: "CREATE_PLAYLIST",
+            payload: {
+              _id: newPlaylistResponse.data.playlist._id,
+              playlistName: newPlaylistInput,
+              videoId: video._id,
+            },
+          });
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -67,16 +72,23 @@ export default function VideoDetails() {
     if (!user) {
       return setShowAuthModal(true);
     }
-    dispatch({
-      type: "TOGGLE_IN_PLAYLIST",
-      payload: { videoId: video._id, playlistId: playlistId },
-    });
-    const toggleInPlaylistResponse = await axios.post(
-      `https://watch-finsight.desaihetav.repl.co/playlists/${playlistId}`,
-      {
-        videoId: video._id,
+    try {
+      const toggleInPlaylistResponse = await axios.post(
+        `https://watch-finsight.desaihetav.repl.co/playlists/${playlistId}`,
+        {
+          videoId: video._id,
+        }
+      );
+      console.log(toggleInPlaylistResponse.data.success);
+      if (toggleInPlaylistResponse.data.success) {
+        dispatch({
+          type: "TOGGLE_IN_PLAYLIST",
+          payload: { videoId: video._id, playlistId: playlistId },
+        });
       }
-    );
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const hasDataLoaded = user
