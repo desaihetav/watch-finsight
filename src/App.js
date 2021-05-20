@@ -24,7 +24,7 @@ function App() {
       const response = await axios.get(
         "https://watch-finsight.desaihetav.repl.co/videos"
       );
-      dispatch({ type: "INITIALIZE_VIDEOS", payload: response.data });
+      dispatch({ type: "INITIALIZE_VIDEOS", payload: response.data.videos });
     } catch (error) {
       console.log(error);
     }

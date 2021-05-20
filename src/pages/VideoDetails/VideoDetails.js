@@ -18,7 +18,7 @@ export default function VideoDetails() {
       : setShowAuthModal(true);
   };
 
-  const video = videos.find((videoItem) => videoItem.id === videoId);
+  const video = videos.find((videoItem) => videoItem.videoId === videoId);
 
   const getPlaylistById = (id) =>
     playlists.filter((playlistItem) => playlistItem.id === id)?.[0];
@@ -60,7 +60,7 @@ export default function VideoDetails() {
         <div className={`${styles.container}`}>
           <div className={`${styles.reactPlayer}`}>
             <ReactPlayer
-              url={`https://www.youtube.com/watch?v=${video.id}`}
+              url={`https://www.youtube.com/watch?v=${video.videoId}`}
               className={`${styles.reactPlayer}`}
               width="100%"
               height="100%"
@@ -199,7 +199,7 @@ export default function VideoDetails() {
                         visibility
                       </span>
                       <div className={`space-x-0-5`}></div>
-                      <span>{video.statistics.viewCount} views</span>
+                      <span>{video.viewCount} views</span>
                     </div>
                     <div
                       className={`flex items-center flex-1 justify-between ${styles.statItem}`}
@@ -208,7 +208,7 @@ export default function VideoDetails() {
                         favorite
                       </span>
                       <div className={`space-x-0-5`}></div>
-                      <span>{video.statistics.likeCount} likes</span>
+                      <span>{video.likeCount} likes</span>
                     </div>
                   </div>
                   <div
@@ -221,7 +221,7 @@ export default function VideoDetails() {
                         forum
                       </span>
                       <div className={`space-x-0-5`}></div>
-                      <span>{video.statistics.commentCount} comments</span>
+                      <span>{video.commentCount} comments</span>
                     </div>
                     <div
                       className={`flex items-center flex-1 justify-between ${styles.statItem}`}
@@ -230,7 +230,7 @@ export default function VideoDetails() {
                         timelapse
                       </span>
                       <div className={`space-x-0-5`}></div>
-                      <span>{video.published_date}</span>
+                      <span>{video.publishedDate}</span>
                     </div>
                   </div>
                 </div>

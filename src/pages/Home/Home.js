@@ -29,7 +29,7 @@ export default function Home() {
       <div className="container">
         <h1>All Videos</h1>
         {videos.map((videoItem) => (
-          <VideoCard videoId={videoItem.id} />
+          <VideoCard videoItemId={videoItem.videoId} />
         ))}
       </div>
     </div>

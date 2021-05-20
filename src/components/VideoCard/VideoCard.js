@@ -2,21 +2,22 @@ import styles from "./VideoCard.module.css";
 import { Link } from "react-router-dom";
 import { useData } from "../../context";
 
-export default function VideoCard({ videoId }) {
+export default function VideoCard({ videoItemId }) {
   const { videos } = useData();
   const findVideoById = () =>
-    videos.find((videoItem) => videoItem.id === videoId);
+    videos.find((videoItem) => videoItem.videoId === videoItemId);
   const {
-    id,
+    videoId,
     thumbnailURL,
     channelName,
-    published_date,
+    publishedDate,
     title,
     description,
     duration,
   } = findVideoById();
+
   return (
-    <Link to={`/video/${id}`} className="w-full">
+    <Link to={`/video/${videoId}`} className="w-full">
       <div className={`${styles.cardContainer}`}>
         <div className={`${styles.card}`}>
           <img alt="" src={thumbnailURL} className={`${styles.cardImage}`} />
@@ -26,7 +27,7 @@ export default function VideoCard({ videoId }) {
             <span>new</span>
           </div> */}
             <p className={`${styles.cardSubtitle}`}>
-              {channelName} • {published_date}
+              {channelName} • {publishedDate}
             </p>
 
             <h3 className={`${styles.cardTitle}`}>{title}</h3>
