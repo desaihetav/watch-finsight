@@ -1,0 +1,150 @@
+.container {
+  max-width: 1280px;
+  margin: 0rem auto;
+}
+
+.reactPlayer {
+  margin: 0 auto;
+  height: calc((100vw - 0rem) * 0.5625);
+  width: calc(100vw - 0rem);
+  max-width: 1280px;
+}
+
+.avatarImage {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.channelName {
+  font-size: 1.125rem;
+  margin: 0;
+}
+
+.subs {
+  font-size: 0.875rem;
+  margin: 0;
+  color: var(--color-text-2);
+}
+
+.title {
+  font-size: 1.25rem;
+}
+
+.description {
+  color: var(--color-text-2);
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+}
+
+.contentGrid {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 1rem 0;
+}
+
+.flexLeft {
+  margin: auto;
+}
+
+.flexRight {
+  max-width: 25rem;
+  margin: auto;
+}
+
+.buttonBar span {
+  color: var(--color-text-1);
+}
+
+.playlistMenu {
+  display: block;
+  position: absolute;
+  right: 0;
+  padding: 0 1rem;
+  width: 15rem;
+  z-index: 1;
+  background-color: var(--color-background-2);
+  border: 1px solid var(--color-text-4);
+}
+
+.playlistMenuItem {
+  color: var(--color-text-2);
+  padding: 0.5rem 0;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  margin: 0 0.25rem;
+}
+
+.newPlaylistInput {
+  border: 1px solid var(--color-text-4);
+  padding: 0.5rem 1rem;
+  width: 100%;
+  max-width: 80%;
+}
+
+.addIcon {
+  padding: 0.5rem;
+}
+
+.stats {
+  font-size: 0.875rem;
+  color: var(--color-text-2);
+  flex-grow: 1;
+}
+
+.statItem {
+  max-width: 8rem;
+}
+
+.icon {
+  font-size: 1rem;
+}
+
+.modalOuter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 9;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.modalInner {
+  background-color: var(--color-background-3);
+  margin: 0 1rem;
+  padding: 1rem 2rem;
+  max-width: 40rem;
+}
+
+@media screen and (min-width: 640px) {
+  .reactPlayer {
+    height: calc((100vw - 2rem) * 0.5625);
+    width: calc(100vw - 2rem);
+    max-width: 1280px;
+  }
+  .container {
+    margin-top: 2rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .contentGrid {
+    flex-direction: row;
+    width: 100%;
+    margin: 1rem 0;
+  }
+  .flexLeft {
+    width: 67%;
+    margin-right: 1rem;
+  }
+  .flexRight {
+    max-width: 25rem;
+    width: 33%;
+    margin-left: 1rem;
+  }
+}
