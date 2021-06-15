@@ -10,17 +10,41 @@ export const AuthProvider = ({ children }) => {
     JSON.parse(localStorage.getItem("authUser"))
   );
 
+  const [token, setToken] = useState(
+    JSON.parse(localStorage.getItem("authToken"))
+  );
+
+  if (token) {
+    console.log("token set");
+    axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  }
+
+  axios.interceptors.response.use(undefined, function (error) {
+    if (
+      error.response.status === 401 ||
+      error.response.status === 403 ||
+      error.response.data.message === "Invalid Token"
+    ) {
+      logout();
+    }
+    return Promise.reject(error);
+  });
+
   const loginUserWithCredentials = async (email, password) => {
     try {
       const {
-        data: { user, success, message },
+        data: { user, token, success, message },
       } = await axios.post("https://watch-finsight.desaihetav.repl.co/login", {
         email,
         password,
       });
       if (success) {
+        console.log(token);
         setUser(user);
+        setToken(token);
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         localStorage?.setItem("authUser", JSON.stringify(user));
+        localStorage?.setItem("authToken", JSON.stringify(token));
       }
       return { user, message, success };
     } catch (error) {
@@ -32,7 +56,7 @@ export const AuthProvider = ({ children }) => {
   const createUserWithCredentials = async (name, email, password) => {
     try {
       const {
-        data: { user, success, message },
+        data: { user, token, success, message },
       } = await axios.post("https://watch-finsight.desaihetav.repl.co/signup", {
         name,
         email,
@@ -40,7 +64,10 @@ export const AuthProvider = ({ children }) => {
       });
       if (success) {
         setUser(user);
+        setToken(token);
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         localStorage?.setItem("authUser", JSON.stringify(user));
+        localStorage?.setItem("authToken", JSON.stringify(token));
       }
       return { user, message, success };
     } catch (error) {
@@ -67,8 +94,11 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = async () => {
-    localStorage?.removeItem("authUser");
     setUser(null);
+    setToken(null);
+    axios.defaults.headers.common["Authorization"] = null;
+    localStorage?.removeItem("authUser");
+    localStorage?.removeItem("authToken");
   };
 
   return (
