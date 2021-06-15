@@ -7,6 +7,7 @@ export const useData = () => useContext(DataContext);
 
 export const DataProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducerFunc, initialState);
+  console.log(state.playlists);
   return (
     <DataContext.Provider
       value={{

@@ -64,7 +64,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    fetchPlaylistsData();
+    user && fetchPlaylistsData();
   }, [user]);
 
   return (

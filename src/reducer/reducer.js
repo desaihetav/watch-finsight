@@ -1,5 +1,3 @@
-import { v4 as uuid } from "uuid";
-
 const addToPlaylist = (state, videoId, playlistId) => ({
   ...state,
   playlists: state.playlists.map((playlistItem) => {
